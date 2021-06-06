@@ -17,6 +17,8 @@ class Tableau extends Phaser.Scene{
         this.load.image('checkpoint', 'assets/Brume1.png');
         this.load.audio('gunshot', 'assets/Sounds/Laser_Shot.mp3');
         this.load.audio('bound', 'assets/Sounds/Bounds.mp3');
+        this.load.audio('bouton', 'assets/Sounds/Button.mp3');
+
 
 
         // this.load.audio('mobDeath', 'assets/cri.ogg');
@@ -75,6 +77,7 @@ class Tableau extends Phaser.Scene{
         this.pipou.displayWidth=14*64;
         this.pipou.setScrollFactor(0,0);
         this.musicbound = this.sound.add('bound');
+        this.musicBouton = this.sound.add('bouton');
         var musicConfig =
             {
                 mute: false,
@@ -85,7 +88,19 @@ class Tableau extends Phaser.Scene{
                 loop: false,
                 delay:0,
             }
+            var musicConfig1 =
+            {
+                mute: false,
+                volume: 0.5,
+                rate : 1,
+                detune: 0,
+                seek: 0,
+                loop: false,
+                delay:0,
+            }
         this.config= musicConfig;
+        this.config1= musicConfig1;
+
         /**
          * Le joueur
          * @type {Player}

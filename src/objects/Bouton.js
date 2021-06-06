@@ -21,6 +21,8 @@ class Bouton extends ObjetPhysique{
          this.oui = true;
          this.ici.laserContainer.iterate(laser=>{
             laser.change();
+            Tableau.current.musicBouton.play(Tableau.current.config1);
+
          })
       }
       else if(this.body.touching.up && this.oui){
