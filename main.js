@@ -17,9 +17,9 @@ let config = {
     },
     scene: [
         new Ui(),
-        // new Menu(),
-        new TableauTiled("Tiled, A pour tirer"),
         new TableauEnd(),
+        new TableauTiled("Tiled, A pour tirer"),
+        new Menu(),
         // new Tableau08("1er niveau"),
         
     ],

@@ -394,7 +394,7 @@ class TableauTiled extends Tableau{
             this.cameras.main.fadeOut(1000, 0, 0, 0);
             this.canEnd = false;
             this.musicamb.stop();
-            setTimeout(function () {    
+            setTimeout(function () {
                 Tableau.suivant();
             }, 1000);
         }

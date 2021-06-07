@@ -3,7 +3,7 @@ class Menu extends Tableau{
     preload() {
         super.preload();
         this.load.image('MenuArt', 'assets/MenuArt.png');
-        this.load.video('Intro', 'assets/ciné1.mp4')
+        // this.load.video('Intro', 'assets/ciné1.mp4')
 
         this.load.audio('MenuZik', 'assets/Sounds/E_Menu.mp3');
 
@@ -18,11 +18,11 @@ class Menu extends Tableau{
     }
     create() {
         super.create();
-        this.vid = this.add.video(14 * 64 / 2, 7 * 64 / 2, 'Intro');
-        this.vid.setDisplaySize(14 * 64, 7 * 64);
-        this.vid.play(true);
-        this.vid.setDepth(200);
-        this.vid.setLoop(false);
+        // this.vid = this.add.video(14 * 64 / 2, 7 * 64 / 2, 'Intro');
+        // this.vid.setDisplaySize(14 * 64, 7 * 64);
+        // this.vid.play(true);
+        // this.vid.setDepth(200);
+        // this.vid.setLoop(false);
         this.cameras.main.setBounds(0, 0, width, height);
         this.physics.world.setBounds(0, 0, width, height);
         this.back = this.sound.add('MenuZik');
@@ -45,7 +45,7 @@ class Menu extends Tableau{
        
     }
     update(time,delta) {
-        if(this.vid.getCurrentTime() == this.vid.getDuration()){
+        // if(this.vid.getCurrentTime() == this.vid.getDuration()){
             this.back.resume();
             this.bg = this.add.image(14 * 64 / 2, 7 * 64 / 2, 'MenuArt');
             this.bg.setDisplaySize(14 * 64, 7 * 64);
@@ -59,7 +59,7 @@ class Menu extends Tableau{
                 this.tuch.setDepth(202);
                 this.pasfait = false;
             }
-        }
-            
+        // }:
+            // 
     }
 }
