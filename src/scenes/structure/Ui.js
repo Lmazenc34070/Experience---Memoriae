@@ -63,10 +63,13 @@ class Ui extends Phaser.Scene{
             me.gagne(0)
         },100)
 
+        let padTir = new Spells(this,0,0);
+        padTir.x= this.sys.canvas.width-padTir.size-32;
+        padTir.y= this.sys.canvas.height-padTir.size-32;
 
 
         let pad=new GamePad(this,0,0);
-        pad.x=this.sys.canvas.width-pad.size-32;
+        pad.x=this.sys.canvas.width-pad.size-772;
         pad.y=this.sys.canvas.height-pad.size-32;
 
 

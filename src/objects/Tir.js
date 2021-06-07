@@ -14,10 +14,16 @@ class Tir extends ObjetPhysique{
       let tir = this;
       scene.physics.add.collider(this, scene.devant, function(){
          tir.destroy()
+         scene.saigne(tir, function () {
+            //à la fin de la petite anim...ben il se passe rien :)
+        })
       });
       scene.monstersContainer.iterate(monster=>{
          scene.physics.add.overlap(this, monster, function(){
             monster.Tmortlol();
+            scene.saigne(monster, function () {
+               //à la fin de la petite anim...ben il se passe rien :)
+           })
             tir.destroy()
          }, null, scene);
       })
@@ -25,12 +31,18 @@ class Tir extends ObjetPhysique{
          scene.physics.add.overlap(this, laser, function(){
             if(laser.isEnable){
                tir.destroy()
+               scene.saigne(tir, function () {
+                  //à la fin de la petite anim...ben il se passe rien :)
+              })
             }
          }, null, scene);
       })
       scene.rebondContainer.iterate(rebond=>{
          scene.physics.add.overlap(this, rebond, function(){
             tir.destroy()
+            scene.saigne(tir, function () {
+               //à la fin de la petite anim...ben il se passe rien :)
+           })
          }, null, scene);
       })
    }

@@ -3,7 +3,7 @@ let height=7*64; //448;
 
 let config = {
     type: Phaser.AUTO,
-    pixelArt : true,
+    pixelArt : false,
 
 
     physics: {
@@ -12,13 +12,14 @@ let config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 100*3 },
-            debug: true,
+            debug: false,
         }
     },
     scene: [
         new Ui(),
-        new Menu(),
+        // new Menu(),
         new TableauTiled("Tiled, A pour tirer"),
+        new TableauEnd(),
         // new Tableau08("1er niveau"),
         
     ],

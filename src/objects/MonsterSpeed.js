@@ -8,7 +8,7 @@ class Speed extends ObjetEnnemi{
     constructor(scene, x, y) {
         super(scene, x, y, "radar");
         this.setDisplaySize(100,60);
-        this.setBodySize(this.body.width,this.body.height-10);
+        this.setBodySize(this.body.width-60,this.body.height-10);
         this.setOffset(0,0);
         this.setBounce(1);
         this.setCollideWorldBounds(true);
@@ -85,8 +85,11 @@ class Speed extends ObjetEnnemi{
         if(this.body){
             if(this.body.velocity.x<0){
                 this.flipX=false;
+                this.setOffset(60,0);
             }else{
                 this.flipX=true;
+                this.setOffset(0,0);
+
             }
         }
     

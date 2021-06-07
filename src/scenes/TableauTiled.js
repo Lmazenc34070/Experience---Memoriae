@@ -24,11 +24,15 @@ class TableauTiled extends Tableau{
         this.load.image('background', 'assets/Back_Sci_fi4.png');
         this.load.image('pixel', 'assets/pixel.png');
         this.load.audio('ambiance','assets/Sounds/E_Resurrection.mp3');
+        this.load.video('Outro', 'assets/ciné2.mp4')
+
     }
     create() {
         super.create();
 
         let ici=this;
+        this.canEnd = true;
+
 
         this.musicamb = this.sound.add('ambiance');
         var musicConfig =
@@ -111,6 +115,7 @@ class TableauTiled extends Tableau{
         this.devant = this.map.createLayer('Devant', this.tileset, 0, 0);
         this.decor = this.map.createLayer('decor', this.tileset, 0, 0);
         this.decorArr = this.map.createLayer('decor_arriere', this.tileset, 0, 0);
+        this.mort = this.map.createLayer('Mort', this.tileset, 0, 0);
 
         this.obstacle=this.map.createLayer('Obstacle', this/this.tileset, 0, 0);
 
@@ -118,6 +123,9 @@ class TableauTiled extends Tableau{
 
         this.devant.setCollisionByExclusion(-1, true);
         this.obstacle.setCollisionByExclusion(-1, true);
+        this.mort.setCollisionByExclusion(-1, true);
+        this.mort.visible=false;
+
 
         this.Platforms = this.physics.add.group({
             allowGravity: false,
@@ -158,6 +166,7 @@ class TableauTiled extends Tableau{
             this.monstersContainer.add(monster);
             this.physics.add.collider(monster, this.devant);
         });
+
         ici.robotMonsterObjects = ici.map.getObjectLayer('TestEnnemi')['objects'];
         ici.robotMonsterObjects.forEach(monsterObject => {
             let monster=new EnnemiTombe(this,monsterObject.x,monsterObject.y);
@@ -225,13 +234,6 @@ class TableauTiled extends Tableau{
             this.boutonContainer.add(bouton);
             this.physics.add.collider(bouton, this.player);
         });
-        
-        // ici.finObjects = ici.map.getObjectLayer('Fin')['objects'];
-        // ici.finObjects.forEach(finObject => {
-        //     let fin=new Fin(this,finObject.x,finObject.y);
-        //     this.boutonContainer.add(fin);
-        //     // this.physics.add.collider(fin, this.player);
-        // });
 
         ici.movObjects = ici.map.getObjectLayer('Mov')['objects'];
         ici.movObjects.forEach(movObject => {
@@ -299,24 +301,6 @@ class TableauTiled extends Tableau{
             }
         })
 
-        // this.particles4 = this.add.particles('fog');
-        // this.emitter = this.particles4.createEmitter(
-        // {
-        //     x: 0, y: 2000, // à changer en fonction d'où tu les places
-        //     speed: 1000,
-        //     moveToX: {min:100,max:10000}, // limitesX à changer en fonction d'où tu les places
-        //     moveToY: {min:846,max:846}, //limitesY  à changer en fonction d'où tu les places
-        //     rotate: {min:-360,max:360},
-        //     lifespan: 200000, // pas nécessaire autant ^^
-        //     quantity: 4,
-        //     frequency: 1000,
-        //     delay: 1000,
-        //     alpha : 0.5,
-        //     scale: { start: 0.6, end: 0.1 },
-        //     blendMode: 'NORMAL', 
-        // });
-
-
         //----------débug---------------------
             let debug=this.add.graphics().setAlpha(this.game.config.physics.arcade.debug?0.75:0);
         if(this.game.config.physics.arcade.debug === false){
@@ -346,6 +330,7 @@ class TableauTiled extends Tableau{
         // this.sky2.setScrollFactor(0);
 
         this.physics.add.collider(this.player, this.devant);
+        this.physics.add.collider(this.player, this.mort,this.playerDie,null,this);
 
         let z=1000; //niveau Z qui a chaque fois est décrémenté.
         debug.setDepth(z--);
@@ -378,9 +363,22 @@ class TableauTiled extends Tableau{
         // this.sky2.tilePositionY = this.cameras.main.scrollY * 0.05;
     }
 
+    // tp(){
+    //     if (this.player.x > 50 && this.player.x < 140 && this.player.y>800 && this.player.y<900 ) {
+    //         Tableau.current.musicamb.stop();
+    //         this.cameras.main.fadeOut(1, 0, 0, 0);
+    //         this.game.scene.start(TableauEnd);
+    //         // this.scene.start("end");
+    //         this.cameras.main.fadeIn(1000, 0, 0, 0);
+    //     }
+    // }
+
+
+
     update(){
         super.update();
         this.moveParallax();
+        // this.tp();
         this.laserContainer.each(function (child) {child.update();});
         this.boutonContainer.each(function (child) {child.update();});
         let actualPosition=JSON.stringify(this.cameras.main.worldView);
@@ -390,6 +388,15 @@ class TableauTiled extends Tableau{
         ){
             this.previousPosition=actualPosition;
             this.optimizeDisplay();
+        }
+        //FIN
+        if (this.player.x > 50 && this.player.x<140 && this.player.y>800&&this.player.y<900&& this.canEnd) {
+            this.cameras.main.fadeOut(1000, 0, 0, 0);
+            this.canEnd = false;
+            this.musicamb.stop();
+            setTimeout(function () {    
+                Tableau.suivant();
+            }, 1000);
         }
     }
 }

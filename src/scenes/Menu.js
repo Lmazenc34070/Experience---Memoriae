@@ -2,9 +2,9 @@ class Menu extends Tableau{
 
     preload() {
         super.preload();
-        // var aImageFiles = ['monstre', 'monstre2', 'monstre3', 'monstre4'];
-        // var randImage = aImageFiles[Math.floor(Math.random()*aImageFiles.length)];
         this.load.image('MenuArt', 'assets/MenuArt.png');
+        this.load.video('Intro', 'assets/ciné1.mp4')
+
         this.load.audio('MenuZik', 'assets/Sounds/E_Menu.mp3');
 
         this.load.audio('clic','assets/Sounds/button_click.mp3')
@@ -18,15 +18,14 @@ class Menu extends Tableau{
     }
     create() {
         super.create();
-        // vid = this.add.video(14 * 64 / 2, 7 * 64 / 2, 'Intro');
-        // vid.setDisplaySize(14 * 64, 7 * 64);
-        // vid.play(true);
-        // vid.setDepth(200);
-        // vid.setLoop(false);
+        this.vid = this.add.video(14 * 64 / 2, 7 * 64 / 2, 'Intro');
+        this.vid.setDisplaySize(14 * 64, 7 * 64);
+        this.vid.play(true);
+        this.vid.setDepth(200);
+        this.vid.setLoop(false);
         this.cameras.main.setBounds(0, 0, width, height);
         this.physics.world.setBounds(0, 0, width, height);
         this.back = this.sound.add('MenuZik');
-        //this.mood.volume = 0;
 
         this.back.loop = true; 
         this.back.play();
@@ -46,6 +45,7 @@ class Menu extends Tableau{
        
     }
     update(time,delta) {
+        if(this.vid.getCurrentTime() == this.vid.getDuration()){
             this.back.resume();
             this.bg = this.add.image(14 * 64 / 2, 7 * 64 / 2, 'MenuArt');
             this.bg.setDisplaySize(14 * 64, 7 * 64);
@@ -59,5 +59,7 @@ class Menu extends Tableau{
                 this.tuch.setDepth(202);
                 this.pasfait = false;
             }
+        }
+            
     }
 }

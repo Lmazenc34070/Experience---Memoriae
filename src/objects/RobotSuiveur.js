@@ -32,6 +32,10 @@ class RobotSuiveur extends ObjetEnnemi{
             frameRate: 5,
             repeat: -1
         });
+        scene.rebondContainer.iterate(rebond=>{
+            scene.physics.add.collider(this, rebond, function(){
+            }, null, scene);
+         })
     }
 
     

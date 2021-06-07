@@ -13,7 +13,7 @@ class Tableau extends Phaser.Scene{
     preload(){
         this.load.image('pipou', 'assets/Back_Sci_fi4.png');
         // this.load.image('spike', 'assets/spike.png');
-        this.load.image('boom', 'assets/Boom.png');
+        this.load.image('boom', 'assets/kaboom.png');
         this.load.image('checkpoint', 'assets/Brume1.png');
         this.load.audio('gunshot', 'assets/Sounds/Laser_Shot.mp3');
         this.load.audio('bound', 'assets/Sounds/Bounds.mp3');
@@ -137,6 +137,22 @@ class Tableau extends Phaser.Scene{
             // }
         }
     }
+    playerDie(){
+        let me=this;
+        if(!me.player.isDead) {
+            me.musicamb.stop();
+            me.player.isDead = true;
+            me.player.visible = false;
+            //ça saigne...
+            me.saigne(me.player, function () {
+                //à la fin de la petite anim, on relance le jeu
+                me.boom.visible = false;
+                me.player.isDead = false;
+                me.scene.restart();
+                // ui.perd()
+            })
+        }
+    }
     ramasserEtoile (player, star)
     {
         star.disableBody(true, true);
@@ -212,23 +228,25 @@ class Tableau extends Phaser.Scene{
     hitMonster(player, monster){
         let me=this;
         if(monster.isDead !== true){ //si notre monstre n'est pas déjà mort
-            if(
-                // si le player descend
-                player.body.velocity.y > 0
-                // et si le bas du player est plus haut que le monstre
-                && player.getBounds().bottom < monster.getBounds().top+30
+            // if(
+            //     // si le player descend
+            //     player.body.velocity.y > 0
+            //     // et si le bas du player est plus haut que le monstre
+            //     && player.getBounds().bottom < monster.getBounds().top+30
 
-            ){
-                ui.gagne();
-                monster.isDead=true; //ok le monstre est mort
-                monster.visible=false;
-                // this.sound.play('mobDeath');
-                this.saigne(monster,function(){
-                    //à la fin de la petite anim...ben il se passe rien :)
-                })
-                //notre joueur rebondit sur le monstre
-                // player.directionY=500;
-            }else{
+            // ){
+            //     ui.gagne();
+            //     this.disableBody(true, true);
+
+            //     monster.isDead=true; //ok le monstre est mort
+            //     monster.visible=false;
+            //     // this.sound.play('mobDeath');
+            //     this.saigne(monster,function(){
+            //         //à la fin de la petite anim...ben il se passe rien :)
+            //     })
+            //     //notre joueur rebondit sur le monstre
+            //     // player.directionY=500;
+            // }else{
                 //le joueur est mort
                 if(!me.player.isDead){
                     me.musicamb.stop();
@@ -247,7 +265,7 @@ class Tableau extends Phaser.Scene{
                 }
 
 
-            }
+            // }
         }
 
     }
@@ -272,6 +290,8 @@ class Tableau extends Phaser.Scene{
     _destroy(){
         this.player.stop();
         this.scene.stop();
+        localStorage.setItem('cP', null);
+
     }
 
     /**
@@ -288,6 +308,8 @@ class Tableau extends Phaser.Scene{
     static suivant(){
         let ceSeraLaSuivante=false;
         let nextScene=null;
+        localStorage.setItem('cP', null);
+
         if(Tableau.current){
             for(let sc of game.scene.scenes){
                 if(sc.scene.key !== "ui"){
