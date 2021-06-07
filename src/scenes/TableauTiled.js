@@ -269,6 +269,7 @@ class TableauTiled extends Tableau{
           light.addLight(this,246,249,9, 200, 0.5, 0.03,true);
           this.plightContainer.add(light);
         });
+        
         ici.plight = ici.map.getObjectLayer('LightPlat')['objects'];
         ici.plight.forEach(plightObjects => {
           let light = new Light(this,plightObjects.x+16,plightObjects.y-10).setDepth(9999);
